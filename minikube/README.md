@@ -37,7 +37,6 @@ minikube status
 
 ```
 ---
----
 
 ## 🛠️ Common Lifecycle Commands
 
