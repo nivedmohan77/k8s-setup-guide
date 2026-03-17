@@ -4,19 +4,36 @@ This guide provides step-by-step instructions for bootstrapping a best-practice 
 
 ---
 
-## 📋 Prerequisites & AWS Setup
+## 📋 Prerequisites & Infrastructure
 
-### Hardware Requirements
-* **OS:** Ubuntu (Xenial or later)
-* **Instance Type:** `t2.medium` (2 vCPUs, 4GB RAM) or higher.
-* **Privileges:** Sudo access on all nodes.
+Before beginning the installation, ensure your environment meets the following minimum requirements to ensure a stable cluster.
 
-### Networking (Security Groups)
-Ensure instances are in the same Security Group with the following ports open:
-* **Port 6443:** Kubernetes API Server (Required for Workers to join).
-* **Port 22:** SSH access for management.
-* **Port 10250:** Kubelet API (Internal communication).
+### 💻 Hardware & OS
+* **Operating System:** Ubuntu (Xenial 16.04 or later).
+* **Compute:** Minimum **2 vCPUs** and **2GB RAM**.
+  * *Examples:* AWS `t2.medium`, Azure `Standard_B2s`, or a local Virtual Machine.
+* **Privileges:** Full `sudo` access is required on all nodes.
+* **Storage:** At least 20GB of available disk space.
 
+### 🌐 Networking & Security
+The following ports must be open in your firewall or Network Security Group (NSG):
+
+| Port | Protocol | Purpose |
+| :--- | :--- | :--- |
+| **6443** | TCP | Kubernetes API Server (Required for Worker nodes to join) |
+| **22** | TCP | SSH Management Access |
+| **10250** | TCP | Kubelet API (Internal cluster communication) |
+
+> [!IMPORTANT]
+> **Swap Memory:** Kubernetes requires Swap to be disabled. The installation script provided in this repo handles this automatically.
+
+---
+
+> [!TIP]
+> **Cloud Provider Note (AWS/Azure/GCP):**
+> If you are using AWS, ensure all nodes are assigned to the same **Security Group**. You must manually edit the "Inbound Rules" to allow traffic on port **6443** from within the Security Group CIDR or the specific Private IPs of your worker nodes.
+
+---
 ---
 
 ## 🛠️ Step 1: Preparation (Execute on ALL Nodes)
@@ -123,7 +140,7 @@ kubectl apply -f [https://raw.githubusercontent.com/projectcalico/calico/v3.26.0
 ```
 ---
 
-### Get Join Command
+### Get Join Command -- Can be used in case when we lost or have expired the join command.
 
 Generate the token needed for worker nodes:
 
