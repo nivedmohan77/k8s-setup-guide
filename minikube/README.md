@@ -36,9 +36,16 @@ Verify that your cluster components are healthy:
 minikube status
 
 ```
+---
+---
 
-Action,Command
-Stop the cluster,minikube stop
-Pause Kubernetes,minikube pause
-Delete the cluster,minikube delete
-Access Dashboard,minikube dashboard
+## 🛠️ Common Lifecycle Commands
+
+| Action | Command |
+| :--- | :--- |
+| **Stop** the cluster | `minikube stop` |
+| **Pause** Kubernetes | `minikube pause` |
+| **Delete** the cluster | `minikube delete` |
+| **Access Dashboard** | `minikube dashboard` |
+
+---
